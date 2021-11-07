@@ -1,0 +1,13 @@
+.scrolUpButton{
+    width: 100px;
+    color: white;
+    background-color: lightseagreen;
+    position: fixed;
+    border-radius: 9px;
+}
+
+.scrolUp_Container{
+    position: fixed;
+    top:10%;
+    left: 80%;
+}

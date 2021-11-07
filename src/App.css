@@ -1,87 +1,110 @@
+
 .App {
-  text-align: center;
+    text-align: center;
+    background-image: url(assets/background/darkBackgroud.jpg);
+    background-size: cover;
+
+    background-position: center;
+
+    background-repeat: repeat;
+    width: 100vw;
+    height: 100vh;
+    background-attachment: fixed;
+
+
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+    height: 40vmin;
+    pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
 }
 
 .App-link {
-  color: #61dafb;
+    color: #61dafb;
 }
 
-.books_parent_container{
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
+.books_parent_container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow: scroll;
+    height: 86%;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
-.container{
-  display: flex;
-  list-style: none;
+.container {
+    display: flex;
+    list-style: none;
 }
 
-.page{
-  padding: 10px;
-  border: 1px solid #dcdcdc;
-  border-radius: 6px;
-  margin-right: 10px;
-  cursor: pointer;
+.page {
+    padding: 10px;
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    margin-right: 10px;
+    cursor: pointer;
 }
 
-.disabled{
-  cursor: not-allowed;
+.disabled {
+    cursor: not-allowed;
 
 }
 
-.active{
-  border: 2px solid #000;
-  font-weight: bold;
+.active {
+    border: 2px solid #000;
+    font-weight: bold;
 }
 
-.previous{
-  padding: 10px;
-  border-radius: 6px;
-  margin-right: 10px;
-  cursor: pointer;
+.previous {
+    padding: 10px;
+    border-radius: 6px;
+    margin-right: 10px;
+    cursor: pointer;
 }
 
-.break{
-  padding: 10px;
+.break {
+    padding: 10px;
 }
 
-.next{
-  padding: 10px;
-  border-radius: 6px;
-  margin-right: 10px;
-  cursor: pointer;
+.next {
+    padding: 10px;
+    border-radius: 6px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.pagnationContainer {
+    background-color: #106175;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    color: white;
 }
