@@ -6,43 +6,43 @@ import ScrollUp from "./components/ScrollUp";
 import Pagination from "./components/Pagination";
 
 const App = () => {
-  const [data, setData] = useState("");
+  const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [SelectedItemsPerPage, setItemsPerPage] = useState(10);
+  const [SelectedItemsPerPage, setItemsPerPage] = useState(20);
   const [count, setCount] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [filters, setFitlers] = useState([]);
 
   const url = "http://nyx.vima.ekt.gr:3000/api/books/";
 
-  const getBooks = async () => {
-    // const location = window.location.hostname;
-    console.log("GETTING BOOKS.....");
-    const settings = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        page: currentPage,
-        itemsPerPage: SelectedItemsPerPage,
-        filters: filters,
-      }),
-    };
-    try {
-      const fetchResponse = await fetch(`${url}`, settings);
-      console.log("SETTINGS", settings);
-      const result = await fetchResponse.json();
-      setIsLoading(false);
-      console.log("RESUTTTTTT", result);
-      setCount(Math.ceil(result.count));
-      return setData([result]);
-    } catch (e) {
-      return e;
-    }
-  };
+  // const getBooks = async () => {
+  //   // const location = window.location.hostname;
+  //   console.log("GETTING BOOKS.....");
+  //   const settings = {
+  //     method: "POST",
+  //     headers: {
+  //       Accept: "application/json",
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       page: currentPage,
+  //       itemsPerPage: SelectedItemsPerPage,
+  //       filters: filters,
+  //     }),
+  //   };
+  //   try {
+  //     const fetchResponse = await fetch(`${url}`, settings);
+  //     console.log("SETTINGS", settings);
+  //     const result = await fetchResponse.json();
+  //     setIsLoading(false);
+  //     console.log("RESUTTTTTT", result);
+  //     setCount(Math.ceil(result.count));
+  //     return setData([result]);
+  //   } catch (e) {
+  //     return e;
+  //   }
+  // };
 
   useEffect(() => {
     // setIsLoading(true);
@@ -66,9 +66,10 @@ const App = () => {
         console.log("SETTINGS", settings);
         const result = await fetchResponse.json();
         setIsLoading(false);
-        console.log("RESUTTTTTT", result);
+        console.log("RESUTTTTTT", result.books);
+        console.log("countttt", result.count);
         setCount(Math.ceil(result.count));
-        return setData([result]);
+        return setData(result.books);
       } catch (e) {
         return e;
       }
@@ -80,17 +81,21 @@ const App = () => {
   // Logic for displaying data
   const indexOfLastPost = currentPage * SelectedItemsPerPage;
   const indexOfFirstPost = indexOfLastPost - SelectedItemsPerPage;
-  const currentData = data.slice(indexOfFirstPost, indexOfLastPost);
-  const lengthOfData = currentData && currentData[0].books.length;
+  const currentData = data && data.slice(indexOfFirstPost, indexOfLastPost);
+  const lengthOfData = currentData && currentData.length;
+
+  console.log("currentData", currentData);
+
+  //change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   // console.log(data);
 
   const handlePageClick = (event) => {
     const newOffset = event.selected + 1;
-    console.log("@@@@@@", event);
     console.log("SELECTED::::", event.selected + 1);
-    setCurrentPage(newOffset);
-    getBooks();
+    return setCurrentPage(newOffset);
+
     // const clickedValue = e.target.innerHTML;
     //
     // setCurrentPage(clickedValue);
@@ -147,41 +152,39 @@ const App = () => {
       <ScrollUp />
       {!isLoading && (
         <>
-          <Pagination postPerPage={SelectedItemsPerPage} totalCount={count} />
-
-          {/*<div className={"pagnationContainer"}>*/}
-          {/*// // /!*<div>*!/*/}
-          {/*// /!*  <input*!/*/}
-          {/*// /!*  placeholder={Search}*!/*/}
-          {/*// /!*  />*!/*/}
-          {/*// /!*</div>*!/*/}
-          {/*  /!*<ReactPaginate*!/*/}
-          {/*  /!*  pageCount={count}*!/*/}
-          {/*  /!*  pageRange={2}*!/*/}
-          {/*  /!*  forcePage={currentPage - 1}*!/*/}
-          {/*  /!*  marginPagesDisplayed={2}*!/*/}
-          {/*  /!*  onPageChange={handlePageClick}*!/*/}
-          {/*  /!*  containerClassName={"container"}*!/*/}
-          {/*  /!*  previousLinkClassName={"page"}*!/*/}
-          {/*  /!*  breakClassName={"page"}*!/*/}
-          {/*  /!*  nextLinkClassName={"page"}*!/*/}
-          {/*  /!*  pageClassName={"page"}*!/*/}
-          {/*  /!*  disabledClassName={"disabled"}*!/*/}
-          {/*  activeClassName={"active"}*/}
+          {/*<Pagination*/}
+          {/*  postPerPage={SelectedItemsPerPage}*/}
+          {/*  totalCount={count}*/}
+          {/*  paginate={paginate}*/}
           {/*/>*/}
-          {/*</div>*/}
+
+          <div className={"pagnationContainer"}>
+            <ReactPaginate
+              pageCount={count / data.length}
+              pageRange={2}
+              forcePage={currentPage - 1}
+              marginPagesDisplayed={2}
+              onPageChange={handlePageClick}
+              containerClassName={"container"}
+              previousLinkClassName={"page"}
+              breakClassName={"page"}
+              nextLinkClassName={"page"}
+              pageClassName={"page"}
+              disabledClassName={"disabled"}
+              activeClassName={"active"}
+            />
+          </div>
         </>
       )}
 
       <div className={"books_parent_container"}>
-        {!isLoading &&
-          data &&
-          data[0].books.map((item) => {
+        {data &&
+          data.map((item) => {
             // console.log(item);
             return (
               <BooksCard
                 // id={item.id}
-                key={item.index}
+                key={item.id}
                 title={item.book_title}
                 author={item.book_author}
                 book_pages={item.book_pages}
