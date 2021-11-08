@@ -70,11 +70,23 @@
 
 .page {
     padding: 10px;
-    border: 0.1rem solid rgba(245, 245, 245, 0.73);
+    /*margin:10px;*/
+    /*border-bottom: 0.1rem solid rgba(245, 245, 245, 0.73);*/
     border-radius: 6px;
     margin-right: 10px;
     cursor: pointer;
-    height: 45px;
+    height: 40px;
+    border-left: 0.1rem solid rgba(245, 245, 245, 0.73);
+    border-right: 0.1rem solid rgba(245, 245, 245, 0.73);
+
+
+}
+
+.page_previous{
+    text-decoration: none;
+}
+.page_next{
+    text-decoration: none;
 }
 
 .disabled {
@@ -85,6 +97,7 @@
 .active {
     border: 1px solid rgba(0, 129, 255, 0.61);
     font-weight: bold;
+    height: 45px;
     color: mediumpurple;
 }
 
@@ -94,6 +107,7 @@
     margin-right: 10px;
     cursor: pointer;
     color: white;
+    text-decoration: none ;
 }
 
 .break {
@@ -108,7 +122,8 @@
 }
 
 .pagnationContainer {
-    background-color: rgba(75, 85, 55, 0.45);
+    /*background-color: rgba(75, 85, 55, 0.45);*/
+    backdrop-filter: blur(12px);
     width: 40%;
     display: flex;
     flex-direction: row;

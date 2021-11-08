@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import BooksCard from "./components/BooksCard";
 import ReactPaginate from "react-paginate";
 import useLocalStorage from "./components/useLocalStorage";
-// import ScrollUp from "./components/ScrollUp";
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -12,8 +11,8 @@ const App = () => {
   // const [currentPage, setCurrentPage] = useState(1);
   const [SelectedItemsPerPage, setItemsPerPage] = useState(20);
   const [count, setCount] = useState("");
-  // const [searchValue, setSearchValue] = useState("");
-  const [searchValue, setSearchValue] = useLocalStorage("name", "");
+  const [filter, setFilter] = useState("");
+  // const [searchValue, setSearchValue] = useLocalStorage("name", "");
 
   const url = "http://nyx.vima.ekt.gr:3000/api/books/";
   const getBooks = async () => {
@@ -28,7 +27,7 @@ const App = () => {
       body: JSON.stringify({
         page: currentPage,
         itemsPerPage: SelectedItemsPerPage,
-        // filters: filters,
+        filters: [{ type: "all", values: ["" || filter] }],
       }),
     };
     try {
@@ -47,7 +46,6 @@ const App = () => {
 
   useEffect(() => {
     // setIsLoading(true);
-
     getBooks();
   }, [currentPage]);
 
@@ -68,16 +66,24 @@ const App = () => {
     return getBooks();
   };
 
+  const handleFitleredSearch = (e) => {
+    e.preventDefault();
+    localStorage.clear();
+    getBooks();
+  };
+
   console.log("CURRENT PAGE", currentPage);
   return (
     <div className="App">
       <h2>Boooooks fiascooo</h2>
       <label>
         <input
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
           placeholder={"Search Books"}
         />
+
+        <button onClick={handleFitleredSearch}>Results </button>
         {/*<button onClick={handleSearchSubmit}>Submit</button>*/}
       </label>
 
@@ -90,9 +96,9 @@ const App = () => {
             marginPagesDisplayed={2}
             onPageChange={handlePageClick}
             containerClassName={"container"}
-            previousLinkClassName={"page"}
+            previousLinkClassName={"page_previous"}
             breakClassName={"page"}
-            nextLinkClassName={"page"}
+            nextLinkClassName={"page_next"}
             pageClassName={"page"}
             disabledClassName={"disabled"}
             activeClassName={"active"}
