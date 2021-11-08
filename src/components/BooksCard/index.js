@@ -2,7 +2,10 @@ import React from "react";
 import bookBackground from "../../assets/booksCard/index.png";
 import classes from "./index.module.css";
 
-const BooksCard = ({ title, author, book_pages, year, data }) => {
+// ** This component gets the books data through props that have been mapped through and renders to UI
+// ** uses an image that has text overlaying
+
+const BooksCard = ({ data }) => {
   if (!data) {
     return <div> No data available</div>;
   }

@@ -39,8 +39,7 @@ img {
     font-size: 14px;
 }
 
-.book_description{
-
+.book_description {
     position: absolute;
     color: whitesmoke;
     margin-top: -2px;
@@ -53,7 +52,6 @@ img {
 .book_description :last-child {
     font-size: 10px;
 }
-
 
 
 .book-desc {

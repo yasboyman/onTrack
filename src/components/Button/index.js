@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+// no longer using component, kept as an example for styledComponents
+
 const StyledButton = styled.button`
   background: transparent;
   border-radius: 3px;

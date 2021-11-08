@@ -8,15 +8,16 @@ const App = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState("");
   const [currentPage, setCurrentPage] = useLocalStorage("page", "1");
-  // const [currentPage, setCurrentPage] = useState(1);
   const [SelectedItemsPerPage, setItemsPerPage] = useState(20);
   const [count, setCount] = useState("");
   const [filter, setFilter] = useState("");
-  // const [searchValue, setSearchValue] = useLocalStorage("name", "");
+
+  //** This is the heart of the application, below is the URL and post request function
+  //** getBooks gets called when
+  // ** Filter(search) is submitted OR currentPage(page number) is updated & it has functionality to accept itemsPerPage(set at 20)
 
   const url = "http://nyx.vima.ekt.gr:3000/api/books/";
   const getBooks = async () => {
-    // const location = window.location.hostname;
     console.log("GETTING BOOKS.....");
     const settings = {
       method: "POST",
@@ -32,12 +33,10 @@ const App = () => {
     };
     try {
       const fetchResponse = await fetch(`${url}`, settings);
-      console.log("SETTINGS", settings);
       const result = await fetchResponse.json();
       setIsLoading(false);
-      console.log("RESUTTTTTT", result.books);
-      setCount(Math.ceil(result.count / SelectedItemsPerPage));
-      return setData(result.books);
+      setCount(Math.ceil(result.count / SelectedItemsPerPage)); // this gets the total results and divides by items on page
+      return setData(result.books); // Here we set the data to 'data' State
     } catch (e) {
       console.log("error", e);
       return e;
@@ -49,33 +48,24 @@ const App = () => {
     getBooks();
   }, [currentPage]);
 
-  // Logic for displaying data
-  // const indexOfLastPost = currentPage * SelectedItemsPerPage;
-  // const indexOfFirstPost = indexOfLastPost - SelectedItemsPerPage;
-  // const currentData = data && data.slice(indexOfFirstPost, indexOfLastPost);
-  // const lengthOfData = currentData && currentData.length;
-  // const totalPages = Math.ceil(count / data.length);
-
-  //change page
-  // const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
+  //* Here we handle page clicking, the following takes into account issues with React-Paginate,
+  // which starts has an index starting at 0,which we don't want
   const handlePageClick = (event) => {
     const newOffset = event.selected + 1;
-    console.log("SELECTED::::", event.selected + 1);
     setCurrentPage(newOffset);
     return getBooks();
   };
 
-  const handleFitleredSearch = (e) => {
+  //** Here we clear the data in local storage before filtering data, this removes likely errors
+  const handleFilteredSearch = (e) => {
     e.preventDefault();
     localStorage.clear();
     getBooks();
   };
 
-  console.log("CURRENT PAGE", currentPage);
   return (
     <div className="App">
-      <h2>Boooooks fiascooo</h2>
+      <h2>Books Galore</h2>
       <label>
         <input
           value={filter}
@@ -83,10 +73,8 @@ const App = () => {
           placeholder={"Search Books"}
         />
 
-        <button onClick={handleFitleredSearch}>Results </button>
-        {/*<button onClick={handleSearchSubmit}>Submit</button>*/}
+        <button onClick={handleFilteredSearch}>Results</button>
       </label>
-
       {!isLoading && (
         <div className={"pagnationContainer"}>
           <ReactPaginate
@@ -105,7 +93,7 @@ const App = () => {
           />
         </div>
       )}
-
+      s
       <div className={"books_parent_container"}>
         {data &&
           data.map((item) => <BooksCard key={item.id} data={{ ...item }} />)}
