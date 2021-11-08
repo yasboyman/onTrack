@@ -6,8 +6,8 @@ import classes from "./index.module.css";
 // ** uses an image that has text overlaying
 
 const BooksCard = ({ data }) => {
-  if (!data) {
-    return <div> No data available</div>;
+  if (data.length <= 0) {
+    return <alert> No data available</alert>;
   }
   return (
     <>

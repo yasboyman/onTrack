@@ -8,7 +8,7 @@ const App = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState("");
   const [currentPage, setCurrentPage] = useLocalStorage("page", "1");
-  const [SelectedItemsPerPage, setItemsPerPage] = useState(20);
+  const [SelectedItemsPerPage, setItemsPerPage] = useState(20); // Initial value provided, ready for dynamic use change 'useState' to 'useLocalStorage' custom hook
   const [count, setCount] = useState("");
   const [filter, setFilter] = useState("");
 
@@ -16,9 +16,14 @@ const App = () => {
   //** getBooks gets called when
   // ** Filter(search) is submitted OR currentPage(page number) is updated & it has functionality to accept itemsPerPage(set at 20)
 
+  //**     (APP CRITIQUE)     IF MORE TIME >>> app needs:   (APP CRITIQUE)    **////
+  // - better error handling, eg if no data is found when searched... user has to click again to get 'all' results again
+  // - cleaner state change, eg loading and shown in the UI
+  // - better UI, buttons inputs, containers and books info
+  // - Items per page <select> input to be added with options that will reflect in state and localStorage
+
   const url = "http://nyx.vima.ekt.gr:3000/api/books/";
   const getBooks = async () => {
-    console.log("GETTING BOOKS.....");
     const settings = {
       method: "POST",
       headers: {
@@ -28,7 +33,7 @@ const App = () => {
       body: JSON.stringify({
         page: currentPage,
         itemsPerPage: SelectedItemsPerPage,
-        filters: [{ type: "all", values: ["" || filter] }],
+        filters: [{ type: "all", values: [filter] }],
       }),
     };
     try {
@@ -44,7 +49,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    // setIsLoading(true);
+    // setIsLoading(true); // Spinner ideally to be added to show loading state
     getBooks();
   }, [currentPage]);
 
@@ -65,15 +70,21 @@ const App = () => {
 
   return (
     <div className="App">
-      <h2>Books Galore</h2>
-      <label>
+      {/*<h2>Books Galore</h2>*/}
+      <label style={{ display: "inline-flex", marginTop: "20px" }}>
         <input
+          className={"form-control mb-2 mr-sm-2"}
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
           placeholder={"Search Books"}
         />
 
-        <button onClick={handleFilteredSearch}>Results</button>
+        <button
+          className={"btn btn-secondary mb-2"}
+          onClick={handleFilteredSearch}
+        >
+          Results
+        </button>
       </label>
       {!isLoading && (
         <div className={"pagnationContainer"}>

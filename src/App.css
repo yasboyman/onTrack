@@ -74,8 +74,8 @@
     margin-right: 10px;
     cursor: pointer;
     height: 40px;
-    border-left: 0.1rem solid rgba(245, 245, 245, 0.73);
-    border-right: 0.1rem solid rgba(245, 245, 245, 0.73);
+    /*border-left: 0.1rem solid rgba(245, 245, 245, 0.73);*/
+    /*border-right: 0.1rem solid rgba(245, 245, 245, 0.73);*/
 
 
 }
@@ -97,7 +97,7 @@
     border: 1px solid rgba(0, 129, 255, 0.61);
     font-weight: bold;
     height: 45px;
-    color: mediumpurple;
+    /*color: mediumpurple;*/
 }
 
 .previous {
