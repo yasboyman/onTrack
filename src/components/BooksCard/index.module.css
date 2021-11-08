@@ -21,18 +21,25 @@ img {
 
 .book_info {
     top: 19%;
-    width: 146px;
+    width: 300px;
     display: flex;
     flex-direction: column;
     height: 134px;
     pointer-events: none;
     text-align: left;
     padding-left: 10px;
-    font-size: 14px;
+    font-size: 13px;
     color: white;
+    font-weight: 500;
+    /*border: solid 1px red;*/
 }
 
-.book_description_popup {
+.book_info span {
+    color: rgba(84, 243, 243, 0.3);
+    font-size: 14px;
+}
+
+.book_description{
 
     position: absolute;
     color: whitesmoke;
@@ -42,6 +49,12 @@ img {
     flex-direction: column;
     margin-left: 33px;
 }
+
+.book_description :last-child {
+    font-size: 10px;
+}
+
+
 
 .book-desc {
     pointer-events: none;
